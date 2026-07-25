@@ -1,6 +1,5 @@
 # HotelCamp Europe
-
-A YelpCamp-style full-stack app, but for hotels across Europe: browse, add, edit and delete hotel listings, leave star-rated reviews, and see each hotel on a map.
+ Full-stack app, for hotels across Europe: browse, add, edit and delete hotel listings, leave star-rated reviews, and see each hotel on a map.
 
 Inspired by the YelpCamp project from *The Web Developer Bootcamp* (Udemy), rebuilt with a modern stack instead of the course's Express/EJS/MongoDB combo:
 
