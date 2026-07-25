@@ -1,3 +1,5 @@
+import { mockApi } from "./mockApi.js";
+
 async function request(path, options = {}) {
   const res = await fetch(`/api${path}`, {
     credentials: "include",
@@ -17,7 +19,7 @@ async function request(path, options = {}) {
   return data;
 }
 
-export const api = {
+const realApi = {
   register: (payload) =>
     request("/auth/register", { method: "POST", body: JSON.stringify(payload) }),
   login: (payload) =>
@@ -46,3 +48,6 @@ export const api = {
   deleteReview: (hotelId, reviewId) =>
     request(`/hotels/${hotelId}/reviews/${reviewId}`, { method: "DELETE" }),
 };
+
+export const isDemoMode = import.meta.env.VITE_DEMO_MODE === "true";
+export const api = isDemoMode ? mockApi : realApi;

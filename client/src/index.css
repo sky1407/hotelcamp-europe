@@ -8,6 +8,15 @@ body {
 a { color: #b3541e; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
+.demo-banner {
+  background: #b3541e;
+  color: white;
+  text-align: center;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+}
+.demo-banner a { color: white; text-decoration: underline; }
+
 .navbar {
   display: flex;
   justify-content: space-between;
