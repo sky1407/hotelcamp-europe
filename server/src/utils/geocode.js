@@ -22,6 +22,7 @@ const FALLBACK_CITY_COORDS = {
   venice: { lat: 45.4408, lng: 12.3155 },
   florence: { lat: 43.7696, lng: 11.2558 },
   krakow: { lat: 50.0647, lng: 19.945 },
+  brussels: { lat: 50.8503, lng: 4.3517 },
   zagreb: { lat: 45.815, lng: 15.9819 },
   reykjavik: { lat: 64.1466, lng: -21.9426 },
 };

@@ -95,6 +95,60 @@ const HOTELS = [
     address: "Adrianou 45",
     image_url: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800",
   },
+  {
+    title: "Sol Rooftop Hotel",
+    description: "Sun-drenched rooftop pool and terrace bar overlooking Madrid's Puerta del Sol.",
+    price: 155,
+    country: "Spain",
+    city: "Madrid",
+    address: "Calle del Carmen 9",
+    image_url: "https://images.unsplash.com/photo-1629140727571-9b5c6f6267b4?w=800",
+  },
+  {
+    title: "Nyhavn Harbor Hotel",
+    description: "Colourful harbourside hotel steps from Copenhagen's iconic Nyhavn canal.",
+    price: 195,
+    country: "Denmark",
+    city: "Copenhagen",
+    address: "Nyhavn 21",
+    image_url: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800",
+  },
+  {
+    title: "Temple Bar Townhouse Hotel",
+    description: "Georgian townhouse hotel in the heart of Dublin's lively Temple Bar district.",
+    price: 130,
+    country: "Ireland",
+    city: "Dublin",
+    address: "Fleet Street 6",
+    image_url: "https://images.unsplash.com/photo-1573052905904-34ad8c27f0cc?w=800",
+  },
+  {
+    title: "Old Town Krakow Hotel",
+    description: "Restored townhouse hotel on Krakow's medieval market square, near St. Mary's Basilica.",
+    price: 89,
+    country: "Poland",
+    city: "Krakow",
+    address: "Rynek Glowny 12",
+    image_url: "https://images.unsplash.com/photo-1649731000184-7ced04998f44?w=800",
+  },
+  {
+    title: "Gamla Stan Waterfront Hotel",
+    description: "Waterfront hotel with views over Stockholm's old town and archipelago ferries.",
+    price: 180,
+    country: "Sweden",
+    city: "Stockholm",
+    address: "Skeppsbron 30",
+    image_url: "https://images.unsplash.com/photo-1656533391146-dad89b5a8b40?w=800",
+  },
+  {
+    title: "Grand Place Boutique Hotel",
+    description: "Elegant boutique hotel a short walk from Brussels' Grand Place and its chocolate shops.",
+    price: 140,
+    country: "Belgium",
+    city: "Brussels",
+    address: "Rue du Marche aux Herbes 15",
+    image_url: "https://images.unsplash.com/photo-1505576391880-b3f9d713dc4f?w=800",
+  },
 ];
 
 const SAMPLE_REVIEWS = [
@@ -102,7 +156,31 @@ const SAMPLE_REVIEWS = [
   { rating: 4, body: "Great value for money, breakfast could be better though." },
   { rating: 5, body: "Beautiful rooms, would definitely stay again." },
   { rating: 3, body: "Decent stay but a bit noisy at night." },
+  { rating: 5, body: "Stunning views and the bed was so comfortable, best sleep I've had in ages." },
+  { rating: 4, body: "Really friendly front desk staff, checked us in early with no fuss." },
+  { rating: 4, body: "Perfect base for exploring the old town, everything was walkable." },
+  { rating: 5, body: "The rooftop terrace alone is worth the price of the room." },
 ];
+
+const REVIEWERS = [
+  { username: "jasmine_c", email: "jasmine.carter@example.com" },
+  { username: "linda_n", email: "linda.nguyen@example.com" },
+  { username: "joseph_b", email: "joseph.bennett@example.com" },
+  { username: "george_m", email: "george.miller@example.com" },
+  { username: "emma_c", email: "emma.clarke@example.com" },
+  { username: "michael_r", email: "michael.ross@example.com" },
+  { username: "sophia_w", email: "sophia.walker@example.com" },
+  { username: "daniel_h", email: "daniel.harris@example.com" },
+];
+
+function shuffled(arr) {
+  const copy = [...arr];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
 
 async function seed() {
   console.log("Clearing existing data...");
@@ -114,6 +192,11 @@ async function seed() {
     email: "demo@hotelcamp.eu",
     password: "password123",
   });
+
+  console.log("Creating reviewers...");
+  const reviewers = REVIEWERS.map((r) =>
+    User.create({ username: r.username, email: r.email, password: "password123" })
+  );
 
   console.log("Creating hotels across Europe...");
   for (const h of HOTELS) {
@@ -132,16 +215,17 @@ async function seed() {
       author_id: demoUser.id,
     });
 
-    const reviewCount = 1 + Math.floor(Math.random() * SAMPLE_REVIEWS.length);
-    for (let i = 0; i < reviewCount; i++) {
-      const r = SAMPLE_REVIEWS[i % SAMPLE_REVIEWS.length];
+    const reviewCount = 2 + Math.floor(Math.random() * 3);
+    const chosenReviewers = shuffled(reviewers).slice(0, reviewCount);
+    chosenReviewers.forEach((reviewer, i) => {
+      const r = SAMPLE_REVIEWS[Math.floor(Math.random() * SAMPLE_REVIEWS.length)];
       Review.create({
         hotel_id: hotel.id,
-        author_id: demoUser.id,
+        author_id: reviewer.id,
         rating: r.rating,
         body: r.body,
       });
-    }
+    });
     console.log(`  + ${h.title} (${h.city}, ${h.country})`);
   }
 

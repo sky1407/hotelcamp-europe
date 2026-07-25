@@ -28,7 +28,7 @@ Requires Node.js 18+.
 cd server
 npm install
 cp .env.example .env      # defaults are fine for local dev
-npm run seed               # creates demo user + 10 sample hotels across Europe
+npm run seed               # creates a demo user, several named reviewers, and 16 sample hotels across Europe
 npm run dev                 # starts API on http://localhost:5000
 ```
 
@@ -70,6 +70,3 @@ The Express server serves the built React app from `client/dist` and the API fro
 - Swap local disk image storage for Cloudinary: replace `server/src/middleware/upload.js` with Cloudinary's multer storage engine and add your credentials to `.env`.
 - Swap OpenStreetMap tiles for Mapbox: replace the `TileLayer` URL in `client/src/components/MapView.jsx` with a Mapbox tile URL + token.
 
-## Note on this build
-
-This project was scaffolded in a sandboxed environment without access to the npm registry, so dependencies could not be installed or the app run end-to-end here. All backend JavaScript passed `node --check` for syntax validity, and the code was hand-reviewed, but you should run through register → add hotel → review → edit → delete once locally to confirm everything behaves as expected, and report back anything that needs fixing.
